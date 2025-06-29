@@ -4,6 +4,7 @@ celery==5.3.4
 email-validator
 fastapi==0.103.2
 flower==2.0.1
+itsdangerous
 motor==3.3.1
 orjson==3.9.7
 passlib==1.7.4
