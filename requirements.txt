@@ -17,7 +17,6 @@ ecdsa==0.18.0
 email-validator==2.0.0.post2
 fastapi==0.103.2
 flower==2.0.1
-greenlet==2.0.2
 h11==0.14.0
 httpcore==0.18.0
 httptools==0.6.0
