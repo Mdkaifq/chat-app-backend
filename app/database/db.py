@@ -20,7 +20,7 @@ mongo_client = AsyncIOMotorClient(MONGODB_URL)
 mongo_db = mongo_client[settings.DB_NAME]
 
 
-# Dependency to get the MongoDB database
+# Dependency to get the MongoDB databases
 async def get_db() -> AsyncIOMotorDatabase:
     try:
         yield mongo_db
