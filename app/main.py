@@ -60,6 +60,5 @@ app.router.routes.append(APIWebSocketRoute('/ws/chat/{chat_type}/{chat_id}/token
 # routes = [WebSocketRoute(path, endpoint=...), ...]
 # app = Starlette(routes=routes)
 
-handler = app
 
 
