@@ -80,9 +80,11 @@ async def get_current_user_detail(
 ):
 
     # return current_user
-    user = await user_manager.get_by_id(current_user['id'])
-    return user
-
+    try:
+        user = await user_manager.get_by_id(current_user['id'])
+        return user
+    except Exception as e:
+        raise HTTPException(status_code=503, detail=str(e))
 
 # Get a user data
 @router.get('/info/{user_id}', 
