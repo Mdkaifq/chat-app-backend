@@ -9,7 +9,7 @@ from app.exceptions import UserCreationError
 from app import schemas
 from app.crud.user import User
 from app.services.token import TokenManager
-from app.services.worker.tasks import send_account_activation_email
+# from app.services.worker.tasks import send_account_activation_email
 
 
 router = APIRouter()
@@ -39,7 +39,7 @@ async def create_user(
 
         recipient_email = new_user.get('email')
         activation_token = await token_manager.generate_activation_token(recipient_email)
-        send_account_activation_email.delay(activation_token, recipient_email)
+        # send_account_activation_email.delay(activation_token, recipient_email)
         return new_user
         # print('result', result, dir(result))
 
