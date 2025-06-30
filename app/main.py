@@ -1,4 +1,5 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, Request
+from fastapi.responses import JSONResponse
 from fastapi.middleware.cors import CORSMiddleware
 from app.api.v1.api import api_router
 
@@ -9,6 +10,10 @@ from app.database.db import (
     shutdown_db_client,
     db_connection_status,
 )
+
+import logging
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
 
 from fastapi.routing import APIWebSocketRoute
 
@@ -60,5 +65,11 @@ app.router.routes.append(APIWebSocketRoute('/ws/chat/{chat_type}/{chat_id}/token
 # routes = [WebSocketRoute(path, endpoint=...), ...]
 # app = Starlette(routes=routes)
 
-
+@app.exception_handler(Exception)
+async def universal_exception_handler(request: Request, exc: Exception):
+    logger.error(str(exc))
+    return JSONResponse(
+        status_code=500,
+        content={"message": str(exc), "type": type(exc).__name__}
+    )
 
