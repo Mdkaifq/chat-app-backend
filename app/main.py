@@ -22,28 +22,28 @@ from fastapi.routing import APIWebSocketRoute
 API_VERSION = settings.API_V_STR
 
 
+app = FastAPI()
 
 
 # Register the startup event handler
-# @app.on_event('startup')
-# async def startup_event():
-#     await startup_db_client(app)
-#     await db_connection_status()
-
-
-# # Register the shutdown event handler
-# @app.on_event('shutdown')
-# async def shutdown_event():
-#     await shutdown_db_client(app)
-
-async def lifespan(app: FastAPI):
+@app.on_event('startup')
+async def startup_event():
     await startup_db_client(app)
     await db_connection_status()
-    yield
+
+
+# Register the shutdown event handler
+@app.on_event('shutdown')
+async def shutdown_event():
     await shutdown_db_client(app)
 
+# async def lifespan(app: FastAPI):
+#     await startup_db_client(app)
+#     await db_connection_status()
+#     yield
+#     await shutdown_db_client(app)
 
-app = FastAPI()
+
 
 
 app.add_middleware(
