@@ -1,5 +1,5 @@
 from fastapi import FastAPI, Request
-from fastapi.responses import JSONResponse
+from fastapi.responses import JSONResponse, Response
 from fastapi.middleware.cors import CORSMiddleware
 from app.api.v1.api import api_router
 
@@ -22,8 +22,16 @@ from fastapi.routing import APIWebSocketRoute
 API_VERSION = settings.API_V_STR
 
 
-app = FastAPI()
+app = FastAPI(docs_url=None, redoc_url=None)
 
+
+@app.middleware("http")
+async def custom_headers_middleware(request: Request, call_next):
+    response: Response = await call_next(request)
+    if "server" in response.headers:
+        del response.headers["server"]
+    response.headers.update({"x-powered-by": "None"})
+    return response
 
 # Register the startup event handler
 @app.on_event('startup')
@@ -79,3 +87,6 @@ async def universal_exception_handler(request: Request, exc: Exception):
         content={"message": str(exc), "type": type(exc).__name__}
     )
 
+if __name__ == "__main__":
+    import uvicorn
+    uvicorn.run(app, host="0.0.0.0", port=8000)

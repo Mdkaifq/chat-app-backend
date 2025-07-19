@@ -1,4 +1,7 @@
 *.pyc
 __pycache__/
-env.txt
+.env
 venv/
+.dockerignore
+index.bin
+node_modules
